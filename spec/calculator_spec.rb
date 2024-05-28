@@ -36,5 +36,19 @@ RSpec.describe StringCalculator do
 
       it { is_expected.to eq 6 }
     end
+
+    context 'when input has delimiter changer' do
+      context 'when there is no next-line(\n) symbol after delimiter changer' do
+        let(:input) { '//;\n3;7' }
+
+        it { is_expected.to eq 10 }
+      end
+
+      context 'when there is next-line(\n) symbol after delimiter changer' do
+        let(:input) { '//;\n3;7\n4' }
+
+        it { is_expected.to eq 14 }
+      end
+    end
   end
 end
