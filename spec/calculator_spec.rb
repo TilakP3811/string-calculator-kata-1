@@ -3,8 +3,9 @@
 require 'rspec'
 require_relative '../calculator'
 
+# rubocop:disable Metrics/BlockLength
 RSpec.describe StringCalculator do
-  subject { StringCalculator.new.add(input) }
+  subject(:add) { StringCalculator.new.add(input) }
 
   let(:input) { '' }
 
@@ -54,7 +55,10 @@ RSpec.describe StringCalculator do
     context 'when input has negative numbers' do
       let(:input) { '1,-2\n-3' }
 
-      it { is_expected.to raise_error(RuntimeError, 'negatives not allowed: -2, -3') }
+      it 'raises an exception for negative numbers' do
+        expect { add }.to raise_error(RuntimeError, 'negatives not allowed: -2, -3')
+      end
     end
   end
 end
+# rubocop:enable Metrics/BlockLength
