@@ -11,6 +11,7 @@ class StringCalculator
     numbers_array = numbers.tr('\n', delimiter).split(delimiter).map(&:to_i)
 
     raise_negatives_exception(numbers_array)
+    ignore_big_numbers(numbers_array)
 
     numbers_array.sum
   end
@@ -40,5 +41,9 @@ class StringCalculator
     negatives = numbers_array.select(&:negative?)
 
     raise "negatives not allowed: #{negatives.join(', ')}"
+  end
+
+  def ignore_big_numbers(numbers_array)
+    numbers_array.reject! { |num| num > 1000 }
   end
 end
