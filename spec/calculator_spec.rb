@@ -2,11 +2,13 @@ require 'rspec'
 require_relative '../calculator'
 
 RSpec.describe StringCalculator do
+  subject { StringCalculator.new.add(numbers) }
+
+  let(:numbers) { '' }
+
   describe '#add' do
-    it 'returns 0 for an empty string' do
-      calculator = StringCalculator.new
-      result = calculator.add('')
-      expect(result).to eq(0)
+    context 'when number is empty' do
+      it { is_expected.to eq 0 }
     end
   end
 end
