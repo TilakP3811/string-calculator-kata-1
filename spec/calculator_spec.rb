@@ -24,5 +24,11 @@ RSpec.describe StringCalculator do
 
       it { is_expected.to eq 3 }
     end
+
+    context 'when number has unknown amount of numbers' do
+      let(:numbers) { '1,2,3,4,5' }
+
+      it { is_expected.to eq 15 }
+    end
   end
 end
