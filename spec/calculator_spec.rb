@@ -50,5 +50,11 @@ RSpec.describe StringCalculator do
         it { is_expected.to eq 14 }
       end
     end
+
+    context 'when input has negative numbers' do
+      let(:input) { '1,-2\n-3' }
+
+      it { is_expected.to raise_error(RuntimeError, 'negatives not allowed: -2, -3') }
+    end
   end
 end
