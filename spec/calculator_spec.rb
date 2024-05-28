@@ -59,6 +59,12 @@ RSpec.describe StringCalculator do
         expect { add }.to raise_error(RuntimeError, 'negatives not allowed: -2, -3')
       end
     end
+
+    context 'when input has numbers bigger than 1000' do
+      let(:input) { '1,1001,2,2000,3' }
+
+      it { is_expected.to eq 6 }
+    end
   end
 end
 # rubocop:enable Metrics/BlockLength
