@@ -23,7 +23,11 @@ class StringCalculator
 
     if numbers.start_with?('//')
       delimiter_line, numbers = numbers.split('\n', 2)
-      delimiter = delimiter_line[-1]
+      closing_delimiter_index = delimiter_line.index(']')
+
+      if closing_delimiter_index
+        delimiter = delimiter_line[3...closing_delimiter_index]
+      end
     end
 
     [delimiter, numbers]
