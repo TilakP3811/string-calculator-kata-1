@@ -65,6 +65,12 @@ RSpec.describe StringCalculator do
 
       it { is_expected.to eq 6 }
     end
+
+    context 'when input has any length of delimiter changer' do
+      let(:input) { '//[***]\n1***2***3' }
+
+      it { is_expected.to eq 6 }
+    end
   end
 end
 # rubocop:enable Metrics/BlockLength
