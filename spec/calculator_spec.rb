@@ -77,6 +77,12 @@ RSpec.describe StringCalculator do
 
       it { is_expected.to eq 21 }
     end
+
+    context 'when multiple delimiter changer has length more than 1' do
+      let(:input) { '//[*^][%&]\n1*^2%&3\n8*^2%&5' }
+
+      it { is_expected.to eq 21 }
+    end
   end
 end
 # rubocop:enable Metrics/BlockLength
