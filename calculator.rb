@@ -41,8 +41,6 @@ class StringCalculator
         end
       end
 
-      delimiters << current_delimiter unless current_delimiter.empty?
-
       delimiters.reject!(&:empty?)
     end
 
