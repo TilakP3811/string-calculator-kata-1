@@ -4,45 +4,54 @@
 class StringCalculator
   DEFAULT_DELIMITER = ','
   NEXT_LINE = '\n'
+  STAR = '*'
 
   def add(numbers)
     return 0 if numbers.empty?
 
     delimiters, numbers = extract_delimiter(numbers)
+    delimiter_contains_star = false
 
     delimiters.each do |delimiter|
-      numbers = numbers.tr(delimiter, DEFAULT_DELIMITER)
+      delimiter_contains_star = true if delimiter.include?(STAR)
+
+      numbers = numbers.gsub(delimiter, DEFAULT_DELIMITER)
     end
-    numbers_array = numbers.split(DEFAULT_DELIMITER).map(&:to_i)
+    numbers_array = numbers.split(DEFAULT_DELIMITER)
+
+    ignore_characters(numbers_array)
+    numbers_array.map!(&:to_i)
 
     raise_negatives_exception(numbers_array)
     ignore_big_numbers(numbers_array)
 
-    numbers_array.sum
+    return numbers_array.sum unless delimiter_contains_star
+
+    numbers_array.reduce(1, :*)
   end
 
   private
 
   def extract_delimiter(numbers)
-    delimiters = [DEFAULT_DELIMITER, NEXT_LINE]
+    delimiters = [NEXT_LINE]
 
-    if numbers.start_with?('//')
-      delimiter_line, numbers = numbers.split('\n', 2)
-      current_delimiter = ''
+    return [delimiters, numbers] unless numbers.start_with?('//')
 
-      delimiter_line[3..-1].each_char do |char|
-        if char == '['
-          current_delimiter = ''
-        elsif char == ']'
-          delimiters << current_delimiter
-          current_delimiter = ''
-        else
-          current_delimiter += char
-        end
+    delimiter_line, numbers = numbers.split('\n', 2)
+    current_delimiter = ''
+
+    delimiter_line[3..-1].each_char do |char|
+      if char == '['
+        current_delimiter = ''
+      elsif char == ']'
+        delimiters << current_delimiter
+        current_delimiter = ''
+      else
+        current_delimiter += char
       end
-
-      delimiters.reject!(&:empty?)
     end
+
+    delimiters.reject!(&:empty?)
 
     [delimiters, numbers]
   end
@@ -63,5 +72,9 @@ class StringCalculator
 
   def ignore_big_numbers(numbers_array)
     numbers_array.reject! { |num| num > 1000 }
+  end
+
+  def ignore_characters(numbers_array)
+    numbers_array.reject! { |char| char.ord >= 97 && char.ord <= 122 }
   end
 end

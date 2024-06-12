@@ -67,21 +67,33 @@ RSpec.describe StringCalculator do
     end
 
     context 'when input has any length of delimiter changer' do
-      let(:input) { '//[***]\n1***2***3' }
+      let(:input) { '//[^^^]\n1^^^2^^^3' }
 
       it { is_expected.to eq 6 }
     end
 
     context 'when input has more than one custom delimiter changer' do
-      let(:input) { '//[*][%]\n1*2%3\n8*2%5' }
+      let(:input) { '//[^][%]\n1^2%3\n8^2%5' }
 
       it { is_expected.to eq 21 }
     end
 
     context 'when multiple delimiter changer has length more than 1' do
-      let(:input) { '//[*^][%&]\n1*^2%&3\n8*^2%&5' }
+      let(:input) { '//[^][%&]\n1^2%&3\n8^2%&5' }
 
       it { is_expected.to eq 21 }
+    end
+
+    context 'when character are present into input' do
+      let(:input) { '1,a,3' }
+
+      it { is_expected.to eq 4 }
+    end
+
+    context 'when delimiter contains start' do
+      let(:input) { '//[*^]\n2*^3' }
+
+      it { is_expected.to eq 6 }
     end
   end
 end
